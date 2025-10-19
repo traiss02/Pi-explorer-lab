@@ -76,7 +76,9 @@ const Recherche = () => {
     
     // Simulation de recherche plus réaliste
     // Le temps de recherche augmente avec la longueur de la séquence
-    const searchTime = 500 + (searchQuery.length * 100);
+    const BASE_SEARCH_TIME_MS = 500;
+    const TIME_PER_DIGIT_MS = 100;
+    const searchTime = BASE_SEARCH_TIME_MS + (searchQuery.length * TIME_PER_DIGIT_MS);
     
     setTimeout(() => {
       // Simulation: les séquences plus longues ont moins d'occurrences

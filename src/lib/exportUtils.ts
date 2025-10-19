@@ -83,11 +83,16 @@ export const exportToPNG = async (elementId: string, filename: string = 'export.
 
   try {
     // For a real implementation, you would use a library like html2canvas
-    // For now, we'll just show a message
-    console.log('PNG export would capture element:', elementId);
-    alert('Export PNG: Cette fonctionnalité nécessite l\'installation de html2canvas pour capturer les graphiques. Pour l\'instant, utilisez la capture d\'écran de votre navigateur.');
+    // For now, we return a message for the caller to display via toast
+    return {
+      success: false,
+      message: 'Export PNG: Cette fonctionnalité nécessite l\'installation de html2canvas pour capturer les graphiques. Pour l\'instant, utilisez la capture d\'écran de votre navigateur.'
+    };
   } catch (error) {
-    console.error('Error exporting to PNG:', error);
+    return {
+      success: false,
+      message: 'Une erreur est survenue lors de l\'export PNG.'
+    };
   }
 };
 

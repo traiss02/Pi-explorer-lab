@@ -18,10 +18,13 @@ const Analyse = () => {
     { algo: "lzma", ratio: 0.94, complexity: "Très élevée" },
   ];
 
-  const distributionData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => ({
-    digit,
-    frequency: 9.95 + Math.random() * 0.1,
-  }));
+  // Génération stable de données de distribution (ne change pas à chaque render)
+  const [distributionData] = useState(() => 
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => ({
+      digit,
+      frequency: 9.95 + Math.random() * 0.1,
+    }))
+  );
 
   const handleExportCSV = () => {
     setIsExporting(true);
@@ -53,10 +56,17 @@ const Analyse = () => {
     });
   };
 
-  const handleExportPNG = () => {
+  const handleExportPNG = async () => {
     setIsExporting(true);
-    exportToPNG('analysis-charts', 'analyse-pi.png');
+    const result = await exportToPNG('analysis-charts', 'analyse-pi.png');
     setIsExporting(false);
+    if (result) {
+      toast({
+        title: result.success ? "Export réussi" : "Information",
+        description: result.message,
+        variant: result.success ? "default" : "default",
+      });
+    }
   };
 
   return (
