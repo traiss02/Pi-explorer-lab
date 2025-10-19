@@ -1,16 +1,73 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import { LineChart, BarChart, Download, Info } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { exportAnalysisToCSV, exportToJSON, exportToPNG } from "@/lib/exportUtils";
 
 const Analyse = () => {
+  const { toast } = useToast();
+  const [isExporting, setIsExporting] = useState(false);
+
   // Mock data pour visualisation
   const compressionData = [
     { algo: "gzip", ratio: 0.87, complexity: "Moyenne" },
     { algo: "bzip2", ratio: 0.92, complexity: "Élevée" },
     { algo: "lzma", ratio: 0.94, complexity: "Très élevée" },
   ];
+
+  // Génération stable de données de distribution (ne change pas à chaque render)
+  const [distributionData] = useState(() => 
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => ({
+      digit,
+      frequency: 9.95 + Math.random() * 0.1,
+    }))
+  );
+
+  const handleExportCSV = () => {
+    setIsExporting(true);
+    exportAnalysisToCSV(compressionData, distributionData);
+    setIsExporting(false);
+    toast({
+      title: "Export réussi",
+      description: "Les analyses ont été exportées en CSV",
+    });
+  };
+
+  const handleExportJSON = () => {
+    setIsExporting(true);
+    const analysisData = {
+      compression: compressionData,
+      distribution: distributionData,
+      statistics: {
+        chiSquare: { pValue: 0.523, status: "Non rejeté" },
+        runTest: { pValue: 0.487, status: "Randomness OK" },
+        shannonEntropy: { value: 3.321, unit: "bits", status: "Maximal" },
+      },
+      exportDate: new Date().toISOString(),
+    };
+    exportToJSON(analysisData, 'analyse-pi.json');
+    setIsExporting(false);
+    toast({
+      title: "Export réussi",
+      description: "Les analyses ont été exportées en JSON",
+    });
+  };
+
+  const handleExportPNG = async () => {
+    setIsExporting(true);
+    const result = await exportToPNG('analysis-charts', 'analyse-pi.png');
+    setIsExporting(false);
+    if (result) {
+      toast({
+        title: result.success ? "Export réussi" : "Information",
+        description: result.message,
+        variant: result.success ? "default" : "default",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -25,7 +82,7 @@ const Analyse = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8" id="analysis-charts">
             {/* Compressibility Analysis */}
             <Card>
               <CardHeader>
@@ -160,15 +217,27 @@ const Analyse = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex gap-3">
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline" 
+                    onClick={handleExportCSV}
+                    disabled={isExporting}
+                  >
                     <Download className="mr-2 h-4 w-4" />
                     CSV
                   </Button>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline" 
+                    onClick={handleExportJSON}
+                    disabled={isExporting}
+                  >
                     <Download className="mr-2 h-4 w-4" />
                     JSON
                   </Button>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline" 
+                    onClick={handleExportPNG}
+                    disabled={isExporting}
+                  >
                     <Download className="mr-2 h-4 w-4" />
                     PNG (graphiques)
                   </Button>

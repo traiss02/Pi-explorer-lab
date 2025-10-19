@@ -6,12 +6,52 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import { Search, Loader2, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { exportSearchResultsToCSV, exportToJSON } from "@/lib/exportUtils";
 
 const Recherche = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<{
+    query: string;
+    found: boolean;
+    positions: number[];
+    totalOccurrences: number;
+    searchTime: string;
+    datasetSize: string;
+  } | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleExportCSV = () => {
+    if (results) {
+      exportSearchResultsToCSV(results);
+      toast({
+        title: "Export réussi",
+        description: "Les résultats ont été exportés en CSV",
+      });
+    }
+  };
+
+  const handleExportJSON = () => {
+    if (results) {
+      exportToJSON(results, `recherche-pi-${results.query}.json`);
+      toast({
+        title: "Export réussi",
+        description: "Les résultats ont été exportés en JSON",
+      });
+    }
+  };
+
+  const handleAnalyze = () => {
+    if (results) {
+      navigate('/analyse', { state: { sequence: results.query } });
+      toast({
+        title: "Redirection vers l'analyse",
+        description: `Analyse de la séquence ${results.query}`,
+      });
+    }
+  };
 
   const handleSearch = async () => {
     if (!searchQuery) {
@@ -23,16 +63,41 @@ const Recherche = () => {
       return;
     }
 
+    if (searchQuery.length > 20) {
+      toast({
+        title: "Séquence trop longue",
+        description: "Les séquences de plus de 20 chiffres peuvent prendre trop de temps",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSearching(true);
     
-    // Simulation de recherche (à remplacer par vraie API)
+    // Simulation de recherche plus réaliste
+    // Le temps de recherche augmente avec la longueur de la séquence
+    const BASE_SEARCH_TIME_MS = 500;
+    const TIME_PER_DIGIT_MS = 100;
+    const searchTime = BASE_SEARCH_TIME_MS + (searchQuery.length * TIME_PER_DIGIT_MS);
+    
     setTimeout(() => {
+      // Simulation: les séquences plus longues ont moins d'occurrences
+      const baseOccurrences = Math.max(1, Math.floor(10 / searchQuery.length));
+      const occurrences = Math.floor(Math.random() * baseOccurrences) + 1;
+      
+      // Génération de positions aléatoires mais réalistes
+      const positions: number[] = [];
+      for (let i = 0; i < occurrences; i++) {
+        positions.push(Math.floor(Math.random() * 1000000000));
+      }
+      positions.sort((a, b) => a - b);
+      
       const mockResults = {
         query: searchQuery,
         found: true,
-        positions: [762, 18456, 234891],
-        totalOccurrences: 3,
-        searchTime: "0.234s",
+        positions: positions,
+        totalOccurrences: occurrences,
+        searchTime: `${(searchTime / 1000).toFixed(3)}s`,
         datasetSize: "1 milliard de décimales",
       };
       
@@ -43,7 +108,7 @@ const Recherche = () => {
         title: "Recherche terminée",
         description: `${mockResults.totalOccurrences} occurrence(s) trouvée(s)`,
       });
-    }, 1500);
+    }, searchTime);
   };
 
   return (
@@ -150,11 +215,14 @@ const Recherche = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={handleExportCSV}>
                     Exporter en CSV
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={handleAnalyze}>
                     Analyser cette séquence
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={handleExportJSON}>
+                    Exporter en JSON
                   </Button>
                 </div>
               </CardContent>

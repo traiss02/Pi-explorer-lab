@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Code2, Search, LineChart, BookOpen } from "lucide-react";
+import { Code2, Search, LineChart, BookOpen, Megaphone } from "lucide-react";
 
 const Navigation = () => {
   const location = useLocation();
@@ -10,6 +10,7 @@ const Navigation = () => {
     { path: "/recherche", label: "Recherche", icon: Search },
     { path: "/analyse", label: "Analyse", icon: LineChart },
     { path: "/api", label: "API & Docs", icon: BookOpen },
+    { path: "/marketing", label: "Marketing", icon: Megaphone },
   ];
 
   return (
