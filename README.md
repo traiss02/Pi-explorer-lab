@@ -1,24 +1,18 @@
-# Welcome to your Lovable project
+# π-lab | Explorateur de décimales de π
 
-## Project info
+## About this project
 
-**URL**: https://lovable.dev/projects/f323c9f4-0b8a-4c51-9c45-ca08931fe983
+**Creator**: [traiss02](https://github.com/traiss02)
 
-## How can I edit this code?
+**License**: MIT (Free and Open Source)
 
-There are several ways of editing your application.
+This is a free and open-source project for exploring and analyzing the decimals of π with scientific rigor. Feel free to use, modify, and contribute to this project.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/f323c9f4-0b8a-4c51-9c45-ca08931fe983) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
+## How to work with this code?
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Clone this repo and start working locally. The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 Follow these steps:
 
@@ -50,7 +44,11 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## Contributing
+
+This is a free and open-source project. Contributions are welcome! Feel free to submit issues, feature requests, or pull requests.
+
+## Technologies used
 
 This project is built with:
 
@@ -60,14 +58,6 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## License
 
-Simply open [Lovable](https://lovable.dev/projects/f323c9f4-0b8a-4c51-9c45-ca08931fe983) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is licensed under the MIT License - see the LICENSE file for details.
