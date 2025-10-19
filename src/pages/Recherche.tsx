@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
-import { Search, Loader2, Info } from "lucide-react";
+import { Search, Loader2, Info, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { searchInPi, exportToCSV, exportToJSON } from "@/lib/pi-data";
 
 const Recherche = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,25 +26,35 @@ const Recherche = () => {
 
     setIsSearching(true);
     
-    // Simulation de recherche (à remplacer par vraie API)
-    setTimeout(() => {
-      const mockResults = {
+    try {
+      // Recherche réelle dans les décimales de π
+      const searchResults = searchInPi(searchQuery);
+      
+      const results = {
         query: searchQuery,
-        found: true,
-        positions: [762, 18456, 234891],
-        totalOccurrences: 3,
-        searchTime: "0.234s",
-        datasetSize: "1 milliard de décimales",
+        found: searchResults.found,
+        positions: searchResults.positions.slice(0, 100), // Limiter à 100 résultats pour l'affichage
+        totalOccurrences: searchResults.totalOccurrences,
+        searchTime: `${searchResults.searchTime}ms`,
+        datasetSize: "1 million de décimales",
+        allPositions: searchResults.positions // Garder toutes les positions pour l'export
       };
       
-      setResults(mockResults);
-      setIsSearching(false);
+      setResults(results);
       
       toast({
         title: "Recherche terminée",
-        description: `${mockResults.totalOccurrences} occurrence(s) trouvée(s)`,
+        description: `${searchResults.totalOccurrences} occurrence(s) trouvée(s) en ${searchResults.searchTime}ms`,
       });
-    }, 1500);
+    } catch (error) {
+      toast({
+        title: "Erreur de recherche",
+        description: "Une erreur est survenue lors de la recherche",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -150,11 +161,42 @@ const Recherche = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      if (results?.allPositions) {
+                        const exportData = results.allPositions.map((pos: number, idx: number) => ({
+                          position: pos,
+                          occurrence: idx + 1,
+                          sequence: results.query
+                        }));
+                        exportToCSV(exportData, `pi-search-${results.query}.csv`);
+                        toast({
+                          title: "Export CSV",
+                          description: "Fichier téléchargé avec succès",
+                        });
+                      }
+                    }}
+                  >
+                    <Download className="mr-2 h-4 w-4" />
                     Exporter en CSV
                   </Button>
-                  <Button variant="outline" size="sm">
-                    Analyser cette séquence
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      if (results) {
+                        exportToJSON(results, `pi-search-${results.query}.json`);
+                        toast({
+                          title: "Export JSON",
+                          description: "Fichier téléchargé avec succès",
+                        });
+                      }
+                    }}
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Exporter en JSON
                   </Button>
                 </div>
               </CardContent>

@@ -8,6 +8,7 @@ import Recherche from "./pages/Recherche";
 import Analyse from "./pages/Analyse";
 import Api from "./pages/Api";
 import Marketing from "./pages/Marketing";
+import Test from "./pages/Test";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/analyse" element={<Analyse />} />
           <Route path="/api" element={<Api />} />
           <Route path="/marketing" element={<Marketing />} />
+          <Route path="/test" element={<Test />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
