@@ -57,6 +57,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        scientific: "hsl(var(--scientific))",
+        discovery: "hsl(var(--discovery))",
+        innovation: "hsl(var(--innovation))",
       },
       borderRadius: {
         lg: "var(--radius)",
