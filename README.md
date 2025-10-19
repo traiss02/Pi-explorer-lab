@@ -1,73 +1,145 @@
-# Welcome to your Lovable project
+# π-lab - Plateforme d'exploration des décimales de π
 
-## Project info
+## 🧮 À propos du projet
 
-**URL**: https://lovable.dev/projects/f323c9f4-0b8a-4c51-9c45-ca08931fe983
+**π-lab** est une plateforme expérimentale et pédagogique dédiée à l'exploration des décimales de π. Cette application web permet de rechercher des séquences dans les décimales de π, d'analyser leur distribution statistique et d'étudier leur complexité de Kolmogorov.
 
-## How can I edit this code?
+### ✨ Fonctionnalités principales
 
-There are several ways of editing your application.
+- 🔍 **Recherche de séquences** : Trouvez n'importe quelle séquence dans 1 million de décimales de π
+- 📊 **Analyses statistiques** : Distribution des chiffres, tests de normalité, entropie Shannon
+- 🗜️ **Analyse de compressibilité** : Estimation de la complexité via algorithmes de compression
+- 📁 **Exports de données** : Téléchargement en CSV et JSON
+- 🧪 **Tests automatisés** : Vérification complète des fonctionnalités
+- 📱 **Interface responsive** : Design moderne et accessible
 
-**Use Lovable**
+## 🚀 Installation et utilisation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f323c9f4-0b8a-4c51-9c45-ca08931fe983) and start prompting.
+### Prérequis
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js (version 18 ou supérieure)
+- npm ou yarn
 
-**Use your preferred IDE**
+### Installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/votre-username/pi-explorer-lab.git
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 2. Naviguer vers le dossier du projet
+cd pi-explorer-lab
 
-Follow these steps:
+# 3. Installer les dépendances
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Lancer le serveur de développement
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+L'application sera accessible sur `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Scripts disponibles
 
-**Use GitHub Codespaces**
+```bash
+npm run dev      # Serveur de développement
+npm run build    # Build de production
+npm run preview  # Aperçu du build
+npm run lint     # Vérification du code
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🛠️ Technologies utilisées
 
-## What technologies are used for this project?
+Ce projet est construit avec :
 
-This project is built with:
+- **Vite** - Bundler moderne et rapide
+- **React 18** - Bibliothèque UI avec hooks
+- **TypeScript** - Typage statique pour JavaScript
+- **Tailwind CSS** - Framework CSS utility-first
+- **shadcn/ui** - Composants UI modernes
+- **React Router** - Navigation côté client
+- **Lucide React** - Icônes SVG
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📁 Structure du projet
 
-## How can I deploy this project?
+```
+src/
+├── components/          # Composants réutilisables
+│   ├── Navigation.tsx   # Navigation principale
+│   └── ui/             # Composants shadcn/ui
+├── pages/              # Pages de l'application
+│   ├── Home.tsx        # Page d'accueil
+│   ├── Recherche.tsx   # Recherche de séquences
+│   ├── Analyse.tsx     # Analyses statistiques
+│   ├── Api.tsx         # Documentation API
+│   ├── Marketing.tsx   # Plan marketing
+│   └── Test.tsx        # Tests automatisés
+├── lib/                # Utilitaires et données
+│   ├── pi-data.ts      # Données de π et fonctions d'analyse
+│   └── utils.ts        # Utilitaires généraux
+└── hooks/              # Hooks React personnalisés
+```
 
-Simply open [Lovable](https://lovable.dev/projects/f323c9f4-0b8a-4c51-9c45-ca08931fe983) and click on Share -> Publish.
+## 🧪 Tests et qualité
 
-## Can I connect a custom domain to my Lovable project?
+Le projet inclut une page de tests automatisés accessible via `/test` qui vérifie :
 
-Yes, you can!
+- ✅ Recherche de séquences dans π
+- ✅ Distribution des chiffres
+- ✅ Analyse de compressibilité
+- ✅ Performance des algorithmes
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📊 Données utilisées
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **1 million de décimales de π** (données réelles)
+- **Recherche optimisée** avec algorithme O(n)
+- **Analyses statistiques** basées sur les vraies données
+- **Exports fonctionnels** en CSV et JSON
+
+## 🤝 Contribution
+
+Ce projet est **libre et ouvert** à toute contribution extérieure ! 
+
+### Comment contribuer
+
+1. **Fork** le projet
+2. **Créez** une branche pour votre fonctionnalité (`git checkout -b feature/nouvelle-fonctionnalite`)
+3. **Commitez** vos changements (`git commit -m 'Ajout d'une nouvelle fonctionnalité'`)
+4. **Poussez** vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
+5. **Ouvrez** une Pull Request
+
+### Idées de contributions
+
+- 🔬 Amélioration des algorithmes de recherche
+- 📈 Nouvelles visualisations statistiques
+- 🌐 Support multilingue
+- 📱 Optimisations mobiles
+- 🧮 Ajout de nouvelles constantes mathématiques
+- 📚 Documentation et tutoriels
+
+## 📝 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 👨‍💻 Créateur
+
+**Issouf Traoré** - Développeur et passionné de mathématiques
+
+- 🐙 GitHub: [@votre-username](https://github.com/votre-username)
+- 📧 Email: votre.email@example.com
+- 💼 LinkedIn: [Votre profil LinkedIn](https://linkedin.com/in/votre-profil)
+
+## 🙏 Remerciements
+
+- À la communauté mathématique pour l'inspiration
+- Aux contributeurs open source des bibliothèques utilisées
+- À tous ceux qui explorent les mystères de π
+
+## 📚 Ressources
+
+- [Décimales de π](https://www.angio.net/pi/digits.html)
+- [Normalité de π](https://fr.wikipedia.org/wiki/Nombre_normal)
+- [Complexité de Kolmogorov](https://fr.wikipedia.org/wiki/Complexit%C3%A9_de_Kolmogorov)
+
+---
+
+**π-lab** - Explorez l'infini, un chiffre à la fois ! 🚀
